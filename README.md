@@ -5,10 +5,10 @@ A modern, responsive expense tracker built with **React and Tailwind CSS** to he
 ## 📸 Screenshots
 
 ### Dashboard
-![Expense Tracker Dashboard](./assets/dashboard.png)
+![Expense Tracker Dashboard](./src/assets/dashboard.png)
 
 ### Add Transaction
-![Add Transaction Modal](./assets/add-transaction.png)
+![Add Transaction Modal](./src/assets/add-transaction.png)
 
 ## ✨ Features
 
