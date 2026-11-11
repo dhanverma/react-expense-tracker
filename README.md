@@ -90,7 +90,11 @@ npm run preview
 react-expense-tracker/
 ├── public/
 ├── src/
+│   ├── assets/
 │   ├── components/
+│   │   ├── Dashboard.jsx
+│   │   ├── TransactionsView.jsx
+│   │   └── ...
 │   ├── App.jsx
 │   ├── main.jsx
 │   └── index.css
@@ -100,7 +104,7 @@ react-expense-tracker/
 └── README.md
 ```
 
-*Note: The structure above is illustrative; adjust it to match the actual folders and files in your project.*
+*The component folder contains the reusable dashboard, navigation, transaction and summary UI components.*
 
 ## 💡 What I Learned
 

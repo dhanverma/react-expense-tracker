@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Header = ({onClick , onSearch}) => {
+const Header = ({ onClick, search = '', onSearch }) => {
     return (
         <div className='flex items-center sticky top-0 pb-3 text-sm w-full gap-3 bg-[#0c0224] '>
             <div className="searchBox flex items-center text-mauve-300 max-w-md flex-1 p-1.5 shadow-lg shadow-black bg-[#0b0714] rounded-[10px] border border-indigo-950">
@@ -8,14 +8,15 @@ const Header = ({onClick , onSearch}) => {
                     search
                 </span>
                 <input 
-                type="search" 
+                type="search"
                 name="search"
+                value={search}
                 onChange={onSearch} 
                 id="searchInp" 
                 placeholder='Search Transactions...' 
                 className='px-2 focus:outline-none w-full' 
                 />
-                <span className='hidden sm:block bg-mauve-800 rounded-lg ml-auto min-w-15 px-1.5 font-light'>Crtl + K</span>
+                <span className='hidden sm:block text-xs text-center bg-mauve-800 rounded-lg ml-auto min-w-13 px-1.5 font-light'>Ctrl + K</span>
             </div>
             <button
                 type="button"

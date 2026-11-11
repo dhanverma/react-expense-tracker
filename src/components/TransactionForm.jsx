@@ -1,18 +1,36 @@
 
 import React, { useEffect, useState } from 'react'
 
-const categories = [
+const expenseCategories = [
     'Grocery',
-    'Eating Out',
+    'Food',
+    'Personal Care',
+    'Housing',
+    'Utilities',
+    'Transportation',
     'Communication',
+    'Healthcare',
     'Entertainment',
     'Clothes',
-    'Health',
+    'Education',
     'Sports',
+    'Travel',
+    'Gifts',
+    'Office Work',
     'Toiletry',
     'Bills',
+    'Other Expense'
+]
+
+const incomeCategories = [
     'Salary',
-    'Transport'
+    'Freelance',
+    'Business',
+    'Investments',
+    'Rental Income',
+    'Gifts Received',
+    'Refunds',
+    'Other Income'
 ]
 
 const today = new Date().toISOString().split('T')[0];
@@ -31,24 +49,35 @@ const TransactionForm = ({
     const [date, setDate] = useState(today)
     const [amount, setAmount] = useState("")
 
+    // Select categories according to transaction type
+    const availableCategories = type === 'income'
+        ? incomeCategories
+        : expenseCategories;
+
+    // Handle changing transaction type
+    const handleTypeChange = (newType) => {
+        setType(newType)
+        setCategory("")
+    }
+
     const handleSubmit = (event) => {
         event.preventDefault()
         const convertAmt = Number(amount)
 
-        if (selectedTransaction) onUpdate(selectedTransaction.id,{
+        const transactionData = {
             title,
             type,
             category,
             date,
             amount: convertAmt
-        })
-        else onAdd({
-            title,
-            type,
-            category,
-            date,
-            amount: convertAmt
-        })
+        }
+
+        if (selectedTransaction) {
+            onUpdate(selectedTransaction.id, transactionData)
+        } else {
+            onAdd(transactionData)
+        }
+
         onClose()
         setTitle("")
         setType("expense")
@@ -64,8 +93,7 @@ const TransactionForm = ({
             setCategory(selectedTransaction.category)
             setDate(selectedTransaction.date)
             setAmount(selectedTransaction.amount.toString())
-        }
-        else {
+        } else {
             setTitle("")
             setType("expense")
             setCategory("")
@@ -85,22 +113,20 @@ const TransactionForm = ({
             <div className="flex justify-center">
                 <div className="relative flex w-64 rounded-lg bg-[#11011a] p-1">
                     <div
-                        className={`absolute inset-y-1 w-[48.5%] rounded-md bg-violet-600 transition-transform duration-300 ${type === 'expense'
-                            ? 'translate-x-0'
-                            : 'translate-x-full'
-                            }`}
+                        className={`absolute inset-y-1 w-[48.5%] rounded-md bg-violet-600 transition-transform duration-300 ${
+                            type === 'expense'
+                                ? 'translate-x-0'
+                                : 'translate-x-full'
+                        }`}
                     />
 
                     <button
                         type="button"
                         aria-pressed={type === 'expense'}
-                        onClick={() => {
-                            setType('expense')
-                        }
-                        }
-
-                        className={`relative z-10 flex-1 py-1 font-semibold ${type === 'expense' ? 'text-white' : 'text-gray-400'
-                            }`}
+                        onClick={() => handleTypeChange('expense')}
+                        className={`relative z-10 flex-1 py-1 font-semibold ${
+                            type === 'expense' ? 'text-white' : 'text-gray-400'
+                        }`}
                     >
                         Expense
                     </button>
@@ -108,12 +134,10 @@ const TransactionForm = ({
                     <button
                         type="button"
                         aria-pressed={type === 'income'}
-                        onClick={() => {
-                            setType('income')
-                        }
-                        }
-                        className={`relative z-10 flex-1 py-1 font-semibold ${type === 'income' ? 'text-white' : 'text-gray-400'
-                            }`}
+                        onClick={() => handleTypeChange('income')}
+                        className={`relative z-10 flex-1 py-1 font-semibold ${
+                            type === 'income' ? 'text-white' : 'text-gray-400'
+                        }`}
                     >
                         Income
                     </button>
@@ -180,13 +204,13 @@ const TransactionForm = ({
                     >
                         <option value="" disabled>Category</option>
 
-                        {categories.map(category => (
+                        {availableCategories.map(item => (
                             <option
-                                key={category}
-                                value={category}
+                                key={item}
+                                value={item}
                                 className="bg-[#1c0927]"
                             >
-                                {category}
+                                {item}
                             </option>
                         ))}
                     </select>
